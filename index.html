@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Ujian Online SMP 1 - Static Version</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Form Login */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Dashboard & Exam */
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #eef2ff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f9fafb;
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-secondary {
+            background-color: #9ca3af;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6b7280;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .result-box {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: var(--danger);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Ujian Online SMP Negeri 1</h1>
+        <p class="subtitle">Sistem Ujian Berbasis Web (Static JSON Mode)</p>
+    </header>
+
+    <!-- SECTION LOGIN -->
+    <div id="login-section">
+        <div id="login-error" class="alert-error hidden">Username atau Password salah!</div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username / NISN</label>
+                <input type="text" id="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <button type="submit">Masuk Ujian</button>
+        </form>
+    </div>
+
+    <!-- SECTION UJIAN -->
+    <div id="exam-section" class="hidden">
+        <div class="user-info">
+            <span>Siswa: <strong id="student-name">-</strong></span>
+            <span>Soal <span id="current-q-num">1</span> dari <span id="total-q-num">0</span></span>
+        </div>
+
+        <div class="question-card">
+            <div id="question-text" class="question-text">Memuat Soal...</div>
+            <ul id="options-container" class="options-list"></ul>
+        </div>
+
+        <div class="nav-buttons">
+            <button id="btn-prev" class="btn-secondary" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="btn-next" onclick="nextQuestion()">Selanjutnya</button>
+            <button id="btn-finish" class="btn-success hidden" onclick="finishExam()">Selesai & Kirim</button>
+        </div>
+    </div>
+
+    <!-- SECTION HASIL -->
+    <div id="result-section" class="hidden">
+        <div class="result-box">
+            <h2>Ujian Selesai!</h2>
+            <p style="color: var(--text-muted); margin-top: 5px;">Terima kasih telah menyelesaikan ujian.</p>
+            <div id="score-display" class="score-display">0</div>
+            <p id="score-detail">Jawaban Benar: 0 / 0</p>
+            <button onclick="location.reload()" style="margin-top: 25px; width: auto; padding: 10px 25px;">Halaman Utama</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let appData = null;
+    let currentUser = null;
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+
+    // Load JSON Data
+    async function loadData() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error('Gagal memuat data JSON');
+            appData = await response.json();
+        } catch (error) {
+            alert('Gagal mengambil data ujian. Pastikan data.json tersedia.');
+            console.error(error);
+        }
+    }
+
+    // Handle Login
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const usernameInput = document.getElementById('username').value.trim();
+        const passwordInput = document.getElementById('password').value.trim();
+
+        if (!appData) {
+            alert('Data belum siap. Silakan coba sebentar lagi.');
+            return;
+        }
+
+        const user = appData.users.find(u => u.username === usernameInput && u.password === passwordInput);
+
+        if (user) {
+            currentUser = user;
+            document.getElementById('login-error').classList.add('hidden');
+            startExam();
+        } else {
+            document.getElementById('login-error').classList.remove('hidden');
+        }
+    });
+
+    function startExam() {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('exam-section').classList.remove('hidden');
+        document.getElementById('student-name').textContent = currentUser.nama;
+        document.getElementById('total-q-num').textContent = appData.questions.length;
+
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = appData.questions[currentQuestionIndex];
+        document.getElementById('current-q-num').textContent = currentQuestionIndex + 1;
+        document.getElementById('question-text').textContent = (currentQuestionIndex + 1) + '. ' + q.question;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+            const isChecked = userAnswers[q.id] === idx ? 'checked' : '';
+            const li = document.createElement('li');
+            li.className = 'option-item';
+            li.innerHTML = `
+                <label class="option-label">
+                    <input type="radio" name="answer" value="${idx}" ${isChecked} onchange="saveAnswer(${q.id}, ${idx})">
+                    <span>${opt}</span>
+                </label>
+            `;
+            optionsContainer.appendChild(li);
+        });
+
+        // Toggle Buttons
+        document.getElementById('btn-prev').disabled = currentQuestionIndex === 0;
+        if (currentQuestionIndex === appData.questions.length - 1) {
+            document.getElementById('btn-next').classList.add('hidden');
+            document.getElementById('btn-finish').classList.remove('hidden');
+        } else {
+            document.getElementById('btn-next').classList.remove('hidden');
+            document.getElementById('btn-finish').classList.add('hidden');
+        }
+    }
+
+    function saveAnswer(questionId, optionIndex) {
+        userAnswers[questionId] = optionIndex;
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < appData.questions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+        }
+    }
+
+    function finishExam() {
+        if (confirm('Apakah Anda yakin ingin menyelesaikan ujian ini?')) {
+            let correctCount = 0;
+            appData.questions.forEach(q => {
+                if (userAnswers[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            const total = appData.questions.length;
+            const score = Math.round((correctCount / total) * 100);
+
+            document.getElementById('exam-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+
+            document.getElementById('score-display').textContent = score;
+            document.getElementById('score-detail').textContent = `Jawaban Benar: ${correctCount} dari ${total} Soal`;
+        }
+    }
+
+    // Initialize
+    loadData();
+</script>
+</body>
+</html>

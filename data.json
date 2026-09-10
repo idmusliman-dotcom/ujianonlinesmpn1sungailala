@@ -1,0 +1,71 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "password123",
+            "nama": "Administrator / Pengawas",
+            "role": "admin"
+        },
+        {
+            "id": 2,
+            "username": "siswa1",
+            "password": "123",
+            "nama": "Ahmad Rizky (SMPN 1)",
+            "role": "siswa"
+        },
+        {
+            "id": 3,
+            "username": "siswa2",
+            "password": "123",
+            "nama": "Siti Nurhaliza (SMPN 1)",
+            "role": "siswa"
+        }
+    ],
+    "questions": [
+        {
+            "id": 101,
+            "question": "Pancasila sebagai dasar negara Indonesia disahkan pada tanggal...",
+            "options": [
+                "A. 17 Agustus 1945",
+                "B. 18 Agustus 1945",
+                "C. 1 Juni 1945",
+                "D. 22 Juni 1945"
+            ],
+            "correct": 1
+        },
+        {
+            "id": 102,
+            "question": "Hasil dari (-12) x 5 + 20 adalah...",
+            "options": [
+                "A. -40",
+                "B. 40",
+                "C. -80",
+                "D. 80"
+            ],
+            "correct": 0
+        },
+        {
+            "id": 103,
+            "question": "Organ tubuh manusia yang berfungsi memompa darah ke seluruh tubuh adalah...",
+            "options": [
+                "A. Paru-paru",
+                "B. Hati",
+                "C. Jantung",
+                "D. Ginjal"
+            ],
+            "correct": 2
+        },
+        {
+            "id": 104,
+            "question": "Candi Borobudur merupakan peninggalan bersejarah dari kerajaan berkebudayaan...",
+            "options": [
+                "A. Hindu",
+                "B. Buddha",
+                "C. Islam",
+                "D. Konghucu"
+            ],
+            "correct": 1
+        }
+    ]
+}
