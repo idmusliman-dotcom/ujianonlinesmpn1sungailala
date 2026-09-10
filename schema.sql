@@ -53,4 +53,4 @@ CREATE TABLE hasil_ujian (
 -- Ganti hash berikut dengan hasil password_hash() milik admin Anda.
 -- Contoh: buat sementara melalui PHP: echo password_hash('PasswordBaruAnda', PASSWORD_DEFAULT);
 INSERT INTO admin(username,password_hash)
-VALUES ('admin','$2y$10$REPLACE_WITH_YOUR_PASSWORD_HASH');
+VALUES ('admin','admin152');
