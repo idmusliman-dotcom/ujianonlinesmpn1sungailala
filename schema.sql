@@ -1,2 +1,2 @@
 INSERT INTO users (username, password, role) 
-VALUES ('admin_baru', MD5('password123'), 'admin');
+VALUES ('admin', MD5('admin152'), 'admin');
